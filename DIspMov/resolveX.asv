@@ -1,0 +1,27 @@
+function x = resolveX(w,x0)
+
+if (nargin < 2)
+    x0 = pi/2;
+end
+
+m = 1;
+L = 0.1;
+r1 = 0.05;
+k = 2e3;
+
+A = [ -1 ; 1 ];
+b = [ 0 ; pi/2 ];
+
+[theta,F] = fmincon(@(theta)funcao(theta,w,m,L,r1,k),x0,A,b)
+x = 2*L*(1 - cos(theta));
+display(x);
+
+end
+
+
+function F = funcao(theta,w,m,L,r1,k)
+v = m*w^2*(L*sin(theta) + r1) - k*L*tan(theta) + k*L*sin(theta);
+F = v^2;
+end
+
+
